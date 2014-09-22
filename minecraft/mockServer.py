@@ -7,6 +7,7 @@ class ThreadedRequestHandler(socketserver.BaseRequestHandler):
         data = str(self.request.recv(1024), "ascii")
         cur_thread = threading.current_thread()
         response = bytes("{}: {}".format(cur_thread.name, data), "ascii")
+        print(data)
         self.request.sendall(response)
 
 class ThreadedServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
@@ -33,4 +34,4 @@ if __name__ == "__main__":
     server_thread = threading.Thread(target=server.serve_forever)
     server_thread.daemon = False
     server_thread.start()
-    print("server is now runnin gon port {}".format(PORT))
+    print("server is now running gon port {}".format(PORT))
