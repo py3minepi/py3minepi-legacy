@@ -1,6 +1,10 @@
 import socket
 import select
 import sys
+import itertools
+
+
+    
 
 """ @author: Aron Nieminen, Mojang AB"""
 
@@ -33,7 +37,9 @@ class Connection:
         s = '{}({})\n'.format(f, flattened_params)
         self.drain()
         self.lastSent = s
+
         self.socket.sendall(s.encode())
+        #self.socket.close()
 
     def receive(self):
         """Receives data. Note that the trailing newline '\n' is trimmed"""

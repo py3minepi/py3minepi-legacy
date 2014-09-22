@@ -60,13 +60,13 @@ class CmdPositioner:
 class CmdEntity(CmdPositioner):
     """Methods for entities"""
     def __init__(self, connection):
-        super(CmdPositioner, self).__init__(connection, "entity")
+        super(CmdEntity, self).__init__(connection, "entity")
 
 
 class CmdPlayer(CmdPositioner):
     """Methods for the host (Raspberry Pi) player"""
     def __init__(self, connection):
-        super(CmdPositioner, self).__init__(connection, "player")
+        super(CmdPlayer, self).__init__(connection, "player")
         self.conn = connection
 
     def getPos(self):
