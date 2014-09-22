@@ -35,7 +35,7 @@ class Connection:
         #print "s",s
         self.drain()
         self.lastSent = s
-        self.socket.sendall(s)
+        self.socket.sendall(s.encode())
 
     def receive(self):
         """Receives data. Note that the trailing newline '\n' is trimmed"""
