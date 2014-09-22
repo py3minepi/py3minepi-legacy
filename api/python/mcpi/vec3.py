@@ -45,7 +45,7 @@ class Vec3:
         return self.__iadd__(-rhs)
 
     def __repr__(self):
-        return "Vec3(%s,%s,%s)"%(self.x,self.y,self.z)
+        return 'Vec3({},{},{})'.format(self.x, self.y, self.z)
 
     def __iter__(self):
         return iter((self.x, self.y, self.z))

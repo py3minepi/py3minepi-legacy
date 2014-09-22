@@ -23,14 +23,14 @@ class Connection:
             if not readable:
                 break
             data = self.socket.recv(1500)
-            e =  "Drained Data: <%s>\n"%data.strip()
-            e += "Last Message: <%s>\n"%self.lastSent.strip()
+            e =  'Drained Data: <{}>\n'.format(data.strip())
+            e += 'Last Message: <{}>\n'.format(self.lastSent.strip())
             sys.stderr.write(e)
 
     def send(self, f, *data):
         """Sends data. Note that a trailing newline '\n' is added here"""
         flattened_params = ','.join(map(str, itertools.chain.from_iterable(data)))
-        s = "%s(%s)\n"%(f, flattened_params)
+        s = '{}({})\n'.format(f, flattened_params)
         self.drain()
         self.lastSent = s
         self.socket.sendall(s)
@@ -39,7 +39,7 @@ class Connection:
         """Receives data. Note that the trailing newline '\n' is trimmed"""
         s = self.socket.makefile("r").readline().rstrip("\n")
         if s == Connection.RequestFailed:
-            raise RequestError("%s failed"%self.lastSent.strip())
+            raise RequestError('{} failed'.format(self.lastSent.strip()))
         return s
 
     def sendReceive(self, *data):
