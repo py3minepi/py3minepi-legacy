@@ -122,60 +122,60 @@ class CmdEvents:
 class Minecraft:
     """The main class to interact with a running instance of Minecraft Pi."""
     def __init__(self, address="localhost", port=4711):
-        self.conn = Connection(address, port)
+        self._conn = Connection(address, port)
 
-        self.camera = CmdCamera(self.conn)
-        self.entity = CmdEntity(self.conn)
-        self.player = CmdPlayer(self.conn)
-        self.events = CmdEvents(self.conn)
+        self.camera = CmdCamera(self._conn)
+        self.entity = CmdEntity(self._conn)
+        self.player = CmdPlayer(self._conn)
+        self.events = CmdEvents(self._conn)
 
     def getBlock(self, *args):
         """Get block (x,y,z) => id:int"""
-        return int(self.conn.sendReceive("world.getBlock", intFloor(args)))
+        return int(self._conn.sendReceive("world.getBlock", intFloor(args)))
 
     def getBlockWithData(self, *args):
         """Get block with data (x,y,z) => Block"""
-        ans = self.conn.sendReceive("world.getBlockWithData", intFloor(args))
+        ans = self._conn.sendReceive("world.getBlockWithData", intFloor(args))
         return Block(*map(int, ans.split(",")))
     """
         @TODO (What?)
     """
     def getBlocks(self, *args):
         """Get a cuboid of blocks (x0,y0,z0,x1,y1,z1) => [id:int]"""
-        return int(self.conn.sendReceive("world.getBlocks", intFloor(args)))
+        return int(self._conn.sendReceive("world.getBlocks", intFloor(args)))
 
     def setBlock(self, *args):
         """Set block (x,y,z,id,[data])"""
-        self.conn.send("world.setBlock", intFloor(args))
+        self._conn.send("world.setBlock", intFloor(args))
 
     def setBlocks(self, *args):
         """Set a cuboid of blocks (x0,y0,z0,x1,y1,z1,id,[data])"""
-        self.conn.send("world.setBlocks", intFloor(args))
+        self._conn.send("world.setBlocks", intFloor(args))
 
     def getHeight(self, *args):
         """Get the height of the world (x,z) => int"""
-        return int(self.conn.sendReceive("world.getHeight", intFloor(args)))
+        return int(self._conn.sendReceive("world.getHeight", intFloor(args)))
 
     def getPlayerEntityIds(self):
         """Get the entity ids of the connected players => [id:int]"""
-        ids = self.conn.sendReceive("world.getPlayerIds")
+        ids = self._conn.sendReceive("world.getPlayerIds")
         return list(map(int, ids.split("|")))
 
     def saveCheckpoint(self):
         """Save a checkpoint that can be used for restoring the world"""
-        self.conn.send("world.checkpoint.save")
+        self._conn.send("world.checkpoint.save")
 
     def restoreCheckpoint(self):
         """Restore the world state to the checkpoint"""
-        self.conn.send("world.checkpoint.restore")
+        self._conn.send("world.checkpoint.restore")
 
     def postToChat(self, msg):
         """Post a message to the game chat"""
-        self.conn.send("chat.post", msg)
+        self._conn.send("chat.post", msg)
 
     def setting(self, setting, status):
         """Set a world setting (setting, status). keys: world_immutable, nametags_visible"""
-        self.conn.send("world.setting", setting, 1 if bool(status) else 0)
+        self._conn.send("world.setting", setting, 1 if bool(status) else 0)
 
 if __name__ == "__main__":
     mc = Minecraft()

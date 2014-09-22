@@ -1,4 +1,6 @@
 import math
+
+
 class Vec3:
     def __init__(self, x=0, y=0, z=0):
         self.x = x
@@ -20,7 +22,7 @@ class Vec3:
         return self.lengthSqr ** .5
 
     def lengthSqr(self):
-        return self.x * self.x + self.y * self.y  + self.z * self.z
+        return self.x * self.x + self.y * self.y + self.z * self.z
 
     def __mul__(self, k):
         c = self.clone()
@@ -81,4 +83,4 @@ class Vec3:
         self.x, self.z = -self.z, self.x
 
     def distanceTo(self, other):
-        return math.sqrt(math.sq(other.x - self.x)**2 + (other.y - self.y)**2 + (other.z - self.z)**2)
+        return math.sqrt((other.x - self.x)**2 + (other.y - self.y)**2 + (other.z - self.z)**2)
