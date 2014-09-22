@@ -31,8 +31,6 @@ class Connection:
         """Sends data. Note that a trailing newline '\n' is added here"""
         flattened_params = ','.join(map(str, itertools.chain.from_iterable(data)))
         s = "%s(%s)\n"%(f, flattened_params)
-        #print "f,data:",f,data
-        #print "s",s
         self.drain()
         self.lastSent = s
         self.socket.sendall(s)
