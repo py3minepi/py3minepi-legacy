@@ -46,7 +46,7 @@ class CmdPositioner:
     def getTilePos(self, id):
         """Get entity tile position (entityId:int) => Vec3"""
         s = self.conn.sendReceive(self.pkg + ".getTile", id)
-        return Vec3(*map(int, s.split(",")))
+        return Vec3(*map(float, s.split(",")))
 
     def setTilePos(self, id, x, y, z):
         """Set entity tile position (entityId:int, x,y,z)"""
