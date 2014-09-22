@@ -46,7 +46,7 @@ class Vec3:
         return self.__iadd__(-rhs)
 
     def __repr__(self):
-        return "Vec3(%s,%s,%s)"%(self.x,self.y,self.z)
+        return 'Vec3({},{},{})'.format(self.x, self.y, self.z)
 
     def __iter__(self):
         return iter((self.x, self.y, self.z))
@@ -78,40 +78,3 @@ class Vec3:
 
     def distanceTo(self, other):
         return math.sqrt(math.sq(other.x - self.x)**2 + (other.y - self.y)**2 + (other.z - self.z)**2)
-
-def testVec3():
-    # Note: It's not testing everything
-
-    # 1.1 Test initialization
-    it = Vec3(1, -2, 3)
-    assert it.x == 1
-    assert it.y == -2
-    assert it.z == 3
-
-    assert it.x != -1
-    assert it.y != +2
-    assert it.z != -3
-
-    # 2.1 Test cloning and equality
-    clone = it.clone()
-    assert it == clone
-    it.x += 1
-    assert it != clone
-
-    # 3.1 Arithmetic
-    a = Vec3(10, -3, 4)
-    b = Vec3(-7, 1, 2)
-    c = a + b
-    assert c - a == b
-    assert c - b == a
-    assert a + a == a * 2
-
-    assert a - a == Vec3(0,0,0)
-    assert a + (-a) == Vec3(0,0,0)
-
-    # Test repr
-    e = eval(repr(it))
-    assert e == it
-
-if __name__ == "__main__":
-    testVec3()

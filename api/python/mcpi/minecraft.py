@@ -19,7 +19,14 @@ from .util import flatten
 
 
 def intFloor(*args):
-    return [int(math.floor(x)) for x in flatten(args)]
+    """
+    Run math.floor on each argument passed in
+
+    Arguments passed in are expected to be x, y & z coordinates.
+
+    Returns integers (int).
+    """
+    return map(math.floor, args)
 
 class CmdPositioner:
     """Methods for setting and getting positions"""
@@ -30,20 +37,20 @@ class CmdPositioner:
     def getPos(self, id):
         """Get entity position (entityId:int) => Vec3"""
         s = self.conn.sendReceive(self.pkg + ".getPos", id)
-        return Vec3(*list(map(float, s.split(","))))
+        return Vec3(*map(float, s.split(",")))
 
-    def setPos(self, id, *args):
+    def setPos(self, id, x, y, z):
         """Set entity position (entityId:int, x,y,z)"""
-        self.conn.send(self.pkg + ".setPos", id, args)
+        self.conn.send(self.pkg + ".setPos", id, x, y, z)
 
     def getTilePos(self, id):
         """Get entity tile position (entityId:int) => Vec3"""
         s = self.conn.sendReceive(self.pkg + ".getTile", id)
-        return Vec3(*list(map(int, s.split(","))))
+        return Vec3(*map(float, s.split(",")))
 
-    def setTilePos(self, id, *args):
-        """Set entity tile position (entityId:int) => Vec3"""
-        self.conn.send(self.pkg + ".setTile", id, intFloor(*args))
+    def setTilePos(self, id, x, y, z):
+        """Set entity tile position (entityId:int, x,y,z)"""
+        self.conn.send(self.pkg + ".setTile", id, intFloor(x, y, z))
 
     def setting(self, setting, status):
         """Set a player setting (setting, status). keys: autojump"""
@@ -105,7 +112,7 @@ class CmdEvents:
         """Only triggered by sword => [BlockEvent]"""
         s = self.conn.sendReceive("events.block.hits")
         events = [e for e in s.split("|") if e]
-        return [BlockEvent.Hit(*list(map(int, e.split(",")))) for e in events]
+        return [BlockEvent.Hit(*map(int, e.split(","))) for e in events]
 
 
 class Minecraft:
@@ -125,7 +132,7 @@ class Minecraft:
     def getBlockWithData(self, *args):
         """Get block with data (x,y,z) => Block"""
         ans = self.conn.sendReceive("world.getBlockWithData", intFloor(args))
-        return Block(*list(map(int, ans.split(","))))
+        return Block(*map(int, ans.split(",")))
     """
         @TODO
     """
