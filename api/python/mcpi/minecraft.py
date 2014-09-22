@@ -110,13 +110,13 @@ class CmdEvents:
 
 class Minecraft:
     """The main class to interact with a running instance of Minecraft Pi."""
-    def __init__(self, connection):
-        self.conn = connection
+    def __init__(self, address="localhost", port=4711):
+        self.conn = Connection(address, port)
 
-        self.camera = CmdCamera(connection)
-        self.entity = CmdEntity(connection)
-        self.player = CmdPlayer(connection)
-        self.events = CmdEvents(connection)
+        self.camera = CmdCamera(self.conn)
+        self.entity = CmdEntity(self.conn)
+        self.player = CmdPlayer(self.conn)
+        self.events = CmdEvents(self.conn)
 
     def getBlock(self, *args):
         """Get block (x,y,z) => id:int"""
@@ -166,11 +166,6 @@ class Minecraft:
         """Set a world setting (setting, status). keys: world_immutable, nametags_visible"""
         self.conn.send("world.setting", setting, 1 if bool(status) else 0)
 
-    @staticmethod
-    def create(address = "localhost", port = 4711):
-        return Minecraft(Connection(address, port))
-
-
 if __name__ == "__main__":
-    mc = Minecraft.create()
+    mc = Minecraft()
     mc.postToChat("Hello, Minecraft!")
