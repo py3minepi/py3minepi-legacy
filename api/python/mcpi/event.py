@@ -11,6 +11,7 @@ class BlockEvent:
         self.entityId = entityId
 
     def __repr__(self):
+        # TODO: untangle .HIT and .Hit
         sType = {
             BlockEvent.HIT: "BlockEvent.HIT"
         }.get(self.type, "???")
