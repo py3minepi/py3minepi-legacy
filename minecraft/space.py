@@ -17,12 +17,15 @@ class position(tuple):
 
     @property
     def z(self):
-        '''The far forward.'''
+        '''How far forward.'''
         return self[2]
 
 
 def _incl_range(start, end):
-    '''Inclusive range between start and end.'''
+    '''Inclusive range between start and end.
+    
+    Start at start, finishes at end, and includes the end points.
+    '''
 
     sgn = 1 if start <= end else -1
     if start <= end:
@@ -31,25 +34,34 @@ def _incl_range(start, end):
         return range(start, end - 1, -1)
 
 def region(start, end):
-    '''Yield all positions in rectangular region start to end.'''
+    '''Yield all positions between start and end, including end points.
+
+    The x value changes in the outermost loop, and then y and z.
+    '''
     for x in _incl_range(start.x, end.x):
         for y in _incl_range(start.y, end.y):
             for z in _incl_range(start.z, end.z):
                 yield position(x, y, z)
 
+# TODO: Allow pos in Region(start, end) ?
 
 position(1, 2, 3)
-position(1, 2, 3).x == 1
+assert position(1, 2, 3).x == 1
+assert position(1, 2, 3).y == 2
+assert position(1, 2, 3).z == 3
+
+assert list(_incl_range(0, 0)) == [0]
+assert list(_incl_range(0, 1)) == [0, 1]
+assert list(_incl_range(1, 0)) == [1, 0]
+assert list(_incl_range(0, 4)) == [0, 1, 2, 3, 4]
+assert list(_incl_range(4, 0)) == [4, 3, 2, 1, 0]
 
 def testit(start, end):
     return list(region(position(*start), position(*end)))
 
-
-list(_incl_range(0, 0)) == [0]
-list(_incl_range(0, 1)) == [0, 1]
-list(_incl_range(1, 0)) == [1, 0]
-list(_incl_range(0, 4)) == [0, 1, 2, 3, 4]
-list(_incl_range(4, 0)) == [4, 3, 2, 1, 0]
-
-for pos in testit((1, 2, 3), (4, 5 ,6)):
-    print(pos)
+assert testit((1, 2, 3), (2, 3, 4)) == [
+        (1, 2, 3), (1, 2, 4),
+        (1, 3, 3), (1, 3, 4),
+        (2, 2, 3), (2, 2, 4),
+        (2, 3, 3), (2, 3, 4),
+]
