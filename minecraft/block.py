@@ -1,8 +1,14 @@
 from enum import Enum
 class Block:
-    """Minecraft PI block description. Can be sent to Minecraft.setBlock/s"""
-    def __init__(self, id, data=0):
-        self.id = id
+    """
+    Minecraft PI block description. Can be sent to Minecraft.setBlock/s
+    block.type = the blockID of a block (It's meterial)
+    block.data = A unknown member that does something
+    The default type for blocks is dirt
+    """
+
+    def __init__(self, type=3, data=0):
+        self.type = type
         self.data = data
 
     def __cmp__(self, rhs):
@@ -11,15 +17,17 @@ class Block:
     def __hash__(self):
         return (self.id << 8) + self.data
 
-    def withData(self, data):
-        return Block(self.id, data)
-
+    #TODO: This looks wierd, does it have any use?
     def __iter__(self):
         """Allows a Block to be sent whenever id [and data] is needed"""
         return iter((self.id, self.data))
         
     def __repr__(self):
         return 'Block({}, {:.2f})'.format(self.id, self.data)
+
+    #TODO: find out if this has any use
+    def withData(self, data):
+        return Block(self.id, data)
 
 AIR                 = Block(0)
 STONE               = Block(1)

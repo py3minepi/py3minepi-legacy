@@ -58,15 +58,19 @@ class Vec3:
 
     def __cmp__(self, rhs):
         dx = self.x - rhs.x
-        if dx != 0: return dx
+        if dx != 0:
+            return dx
         dy = self.y - rhs.y
-        if dy != 0: return dy
+        if dy != 0:
+            return dy
         dz = self.z - rhs.z
-        if dz != 0: return dz
+        if dz != 0:
+            return dz
         return 0
 
     def iround(self):
-        self._map(lambda v:int(v+0.5))
+        self._map(lambda v: int(v+0.5))
+
     def ifloor(self):
         self._map(int)
 

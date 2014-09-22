@@ -60,23 +60,27 @@ class CmdPositioner:
 class CmdEntity(CmdPositioner):
     """Methods for entities"""
     def __init__(self, connection):
-        CmdPositioner.__init__(self, connection, "entity")
+        super(CmdPositioner, self).__init__(connection, "entity")
 
 
 class CmdPlayer(CmdPositioner):
     """Methods for the host (Raspberry Pi) player"""
     def __init__(self, connection):
-        CmdPositioner.__init__(self, connection, "player")
+        super(CmdPositioner, self).__init__(connection, "player")
         self.conn = connection
 
     def getPos(self):
         return CmdPositioner.getPos(self, [])
+
     def setPos(self, *args):
         return CmdPositioner.setPos(self, [], args)
+
     def getTilePos(self):
         return CmdPositioner.getTilePos(self, [])
+
     def setTilePos(self, *args):
         return CmdPositioner.setTilePos(self, [], args)
+
 
 class CmdCamera:
     def __init__(self, connection):
@@ -134,7 +138,7 @@ class Minecraft:
         ans = self.conn.sendReceive("world.getBlockWithData", intFloor(args))
         return Block(*map(int, ans.split(",")))
     """
-        @TODO
+        @TODO (What?)
     """
     def getBlocks(self, *args):
         """Get a cuboid of blocks (x0,y0,z0,x1,y1,z1) => [id:int]"""
