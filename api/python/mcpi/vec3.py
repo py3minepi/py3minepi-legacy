@@ -1,3 +1,4 @@
+import math
 class Vec3:
     def __init__(self, x=0, y=0, z=0):
         self.x = x
@@ -64,11 +65,19 @@ class Vec3:
         if dz != 0: return dz
         return 0
 
-    def iround(self): self._map(lambda v:int(v+0.5))
-    def ifloor(self): self._map(int)
+    def iround(self):
+        self._map(lambda v:int(v+0.5))
+    def ifloor(self):
+        self._map(int)
 
-    def rotateLeft(self):  self.x, self.z = self.z, -self.x
-    def rotateRight(self): self.x, self.z = -self.z, self.x
+    def rotateLeft(self):
+        self.x, self.z = self.z, -self.x
+
+    def rotateRight(self):
+        self.x, self.z = -self.z, self.x
+
+    def distanceTo(self, other):
+        return math.sqrt(math.sq(other.x - self.x)**2 + (other.y - self.y)**2 + (other.z - self.z)**2)
 
 def testVec3():
     # Note: It's not testing everything
