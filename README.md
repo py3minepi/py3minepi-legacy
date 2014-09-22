@@ -17,3 +17,4 @@ We hope this makes people's lives easier.
 * [ ] Make the code base more readable and thus maintainable
 * [ ] A CI test suite running an rPi emulator (with Travis)
 * [ ] Improve code documentation both in the code base and with a RTD page
+* [ ] Find missing functions that are in the java API but not described in the python API
