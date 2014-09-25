@@ -13,7 +13,7 @@ We hope this makes people's lives easier.
 - [x] Python 3
 - [ ] TESTS (pytest, tox, flake8, coverage)
 - [ ] More intuitive API focusing on getting some mining done and hiding implementation details
-- [ ] Backwards compatibility with the existing codebase (with `__init__` foo)
+- [ ] Backwards compatibility with the existing codebase (with `__init__` foo) so existing scripts will continue to work
 - [ ] Connection backends (socket, in memory for testing)
 - [ ] Clever socket usage so disconnects can be dealt with
 - [ ] Make the code base more readable and thus maintainable
