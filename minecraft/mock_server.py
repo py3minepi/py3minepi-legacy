@@ -2,6 +2,7 @@ import socket
 import socketserver
 import threading
 
+
 class ThreadedRequestHandler(socketserver.BaseRequestHandler):
     def handle(self):
         data = str(self.request.recv(1024), "ascii")
@@ -12,7 +13,7 @@ class ThreadedRequestHandler(socketserver.BaseRequestHandler):
 
 class ThreadedServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
-"""
+    """
     def __init__(self, address="localhost", port=4711):
 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

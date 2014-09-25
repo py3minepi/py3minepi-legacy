@@ -71,7 +71,7 @@ class Vec3:
         return 0
 
     def iround(self):
-        self._map(lambda v: int(v+0.5))
+        self._map(lambda v: int(v + 0.5))
 
     def ifloor(self):
         self._map(int)
@@ -83,4 +83,7 @@ class Vec3:
         self.x, self.z = -self.z, self.x
 
     def distanceTo(self, other):
-        return math.sqrt((other.x - self.x)**2 + (other.y - self.y)**2 + (other.z - self.z)**2)
+        x_dist = other.x - self.x
+        y_dist = other.y - self.y
+        z_dist = other.z - self.z
+        return math.sqrt(x_dist ** 2 + y_dist ** 2 + z_dist ** 2)
