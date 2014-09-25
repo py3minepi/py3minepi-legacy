@@ -1,4 +1,6 @@
-
+"""
+Constants (integers) referring to the corresponding block IDs.
+"""
 AIR = 0
 STONE = 1
 GRASS = 2
@@ -71,4 +73,3 @@ MELON = 103
 FENCE_GATE = 107
 GLOWING_OBSIDIAN = 246
 NETHER_REACTOR_CORE = 247
-
