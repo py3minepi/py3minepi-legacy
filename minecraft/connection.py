@@ -1,10 +1,13 @@
 import socket
+import errno
 import select
 import sys
 import itertools
 
+from . import exceptions
 
-    
+
+
 
 """ @author: Aron Nieminen, Mojang AB"""
 
@@ -16,9 +19,20 @@ class Connection:
     RequestFailed = "Fail"
 
     def __init__(self, address, port):
+        """
+        Initialize TCP socket connection.
+        """
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.connect((address, port))
-        self.lastSent = ""
+        try:
+            self.socket.connect((address, port))
+        except socket.error as e:
+            if e.errno != errno.ECONNREFUSED:
+                # Not the error we are looking for, re-raise
+                raise e
+            msg = 'Could not connect to Minecraft server at %s:%s (connection refused).'
+            raise exceptions.ConnectionError(msg % (address, port))
+
+        self.lastSent = ''
 
     def drain(self):
         """Drains the socket of incoming data"""
