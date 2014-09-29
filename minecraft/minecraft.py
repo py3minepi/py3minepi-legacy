@@ -135,12 +135,11 @@ class Minecraft:
 
     def getBlock(self, *args):
         """Get block (x,y,z) => id:int"""
-        
         return int(self._conn.sendReceive("world.getBlock", intFloor(args)))
 
     def getBlockWithData(self, *args):
         """Get block with data (x,y,z) => Block"""
-       
+
         ans = self._conn.sendReceive("world.getBlockWithData", intFloor(args))
         return Block(*map(int, ans.split(",")))
 
@@ -149,18 +148,16 @@ class Minecraft:
         """
     def getBlocks(self, *args):
         """Get a cuboid of blocks (x0,y0,z0,x1,y1,z1) => [id:int]"""
-        
+
         return int(self._conn.sendReceive("world.getBlocks", intFloor(args)))
 
     def setBlock(self, *args):
         """Set block (x,y,z,id,[data])"""
         self._conn.send("world.setBlock", intFloor(args))
 
-
-    def setBlocks(self, *args): #leaving thisone alone for now
+    def setBlocks(self, *args):  # leaving thisone alone for now
         """Set a cuboid of blocks (x0,y0,z0,x1,y1,z1,id,[data])"""
         self._conn.send("world.setBlocks", intFloor(args))
-
 
     def getGroundHeight(self, *args):
         """Get the height of the world (x,z) => int"""
@@ -184,7 +181,6 @@ class Minecraft:
         """Post a message to the game chat"""
         self._conn.send("chat.post", msg)
 
-    
     def setting(self, setting, status):
         """Set a world setting (setting, status). keys: world_immutable, nametags_visible"""
         self._conn.send("world.setting", setting, 1 if bool(status) else 0)

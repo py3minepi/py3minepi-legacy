@@ -23,4 +23,3 @@ if __name__ == "__main__":
     server_thread.daemon = False
     server_thread.start()
     print("server is now running on port {}".format(PORT))
-
