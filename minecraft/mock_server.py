@@ -11,22 +11,9 @@ class ThreadedRequestHandler(socketserver.BaseRequestHandler):
         print(data)
         self.request.sendall(response)
 
+
 class ThreadedServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
     pass
-    """
-    def __init__(self, address="localhost", port=4711):
-
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.bind((address, port))
-        self.socket.listen(1) #TODO: see if wee need a bigger queue
-
-
-    def run(self):
-        while True:
-            conn, addr = self.socket.accept()
-            data = conn.recv(1024)
-            """
-
 
 if __name__ == "__main__":
     PORT = 4711
@@ -35,4 +22,5 @@ if __name__ == "__main__":
     server_thread = threading.Thread(target=server.serve_forever)
     server_thread.daemon = False
     server_thread.start()
-    print("server is now running gon port {}".format(PORT))
+    print("server is now running on port {}".format(PORT))
+
