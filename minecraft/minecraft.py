@@ -39,18 +39,18 @@ class CmdPositioner:
         s = self.conn.sendReceive(self.pkg + ".getPos", id)
         return Vec3(*map(float, s.split(",")))
 
-    def setPos(self, id, x, y, z):
+    def setPos(self, id, vector3):
         """Set entity position (entityId:int, x,y,z)"""
-        self.conn.send(self.pkg + ".setPos", id, x, y, z)
+        self.conn.send(self.pkg + ".setPos", id, vector3.x, vector3.y, vector3.z)
 
     def getTilePos(self, id):
         """Get entity tile position (entityId:int) => Vec3"""
         s = self.conn.sendReceive(self.pkg + ".getTile", id)
         return Vec3(*map(float, s.split(",")))
 
-    def setTilePos(self, id, x, y, z):
+    def setTilePos(self, id, vector3):
         """Set entity tile position (entityId:int, x,y,z)"""
-        self.conn.send(self.pkg + ".setTile", id, intFloor(x, y, z))
+        self.conn.send(self.pkg + ".setTile", id, intFloor(vector3.x, vector3.y, vector3.z))
 
     def setting(self, setting, status):
         """Set a player setting (setting, status). keys: autojump"""
@@ -129,32 +129,47 @@ class Minecraft:
         self.player = CmdPlayer(self._conn)
         self.events = CmdEvents(self._conn)
 
-    def getBlock(self, *args):
+        self.getHeight = self.getGroundHeight
+    """
+    Messy right now, but you can't refactor without breaking some eggs
+    """
+
+    def getBlock(self, vector3):
         """Get block (x,y,z) => id:int"""
+        args = [vector3.x, vector3.y, vector3.z]
         return int(self._conn.sendReceive("world.getBlock", intFloor(args)))
 
-    def getBlockWithData(self, *args):
+    def getBlockWithData(self, vector3):
         """Get block with data (x,y,z) => Block"""
+        args = [vector3.x, vector3.y, vector3.z]
         ans = self._conn.sendReceive("world.getBlockWithData", intFloor(args))
         return Block(*map(int, ans.split(",")))
-    """
+
+        """
         @TODO (What?)
-    """
-    def getBlocks(self, *args):
+        """
+    def getBlocks(self, vector3_1, vector3_2):
         """Get a cuboid of blocks (x0,y0,z0,x1,y1,z1) => [id:int]"""
+        args = [vector3_1.x, vector3_1.y, vector3_1.z, vector3_2.x, vector3_2.y, vector3_2.z] #cringe
         return int(self._conn.sendReceive("world.getBlocks", intFloor(args)))
 
-    def setBlock(self, *args):
+    def setBlock(self, vector3, blockType, data=None):
         """Set block (x,y,z,id,[data])"""
+        args = [vector3.x, vector3.y, vector3.z, blockType]
+        if data:
+            args.append(data)
         self._conn.send("world.setBlock", intFloor(args))
 
-    def setBlocks(self, *args):
+
+    def setBlocks(self, *args): #leaving thisone alone for now
         """Set a cuboid of blocks (x0,y0,z0,x1,y1,z1,id,[data])"""
         self._conn.send("world.setBlocks", intFloor(args))
 
-    def getHeight(self, *args):
+
+    def getGroundHeight(self, x,z):
         """Get the height of the world (x,z) => int"""
-        return int(self._conn.sendReceive("world.getHeight", intFloor(args)))
+
+        return int(self._conn.sendReceive("world.getHeight", intFloor([x,z])))
 
     def getPlayerEntityIds(self):
         """Get the entity ids of the connected players => [id:int]"""
