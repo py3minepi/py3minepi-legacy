@@ -132,34 +132,28 @@ class Minecraft:
         self.events = CmdEvents(self._conn)
 
         self.getHeight = self.getGroundHeight
-    """
-    Messy right now, but you can't refactor without breaking some eggs
-    """
 
-    def getBlock(self, vector3):
+    def getBlock(self, *args):
         """Get block (x,y,z) => id:int"""
-        args = [vector3.x, vector3.y, vector3.z]
+        
         return int(self._conn.sendReceive("world.getBlock", intFloor(args)))
 
-    def getBlockWithData(self, vector3):
+    def getBlockWithData(self, *args):
         """Get block with data (x,y,z) => Block"""
-        args = [vector3.x, vector3.y, vector3.z]
+       
         ans = self._conn.sendReceive("world.getBlockWithData", intFloor(args))
         return Block(*map(int, ans.split(",")))
 
         """
         @TODO (What?)
         """
-    def getBlocks(self, vector3_1, vector3_2):
+    def getBlocks(self, *args):
         """Get a cuboid of blocks (x0,y0,z0,x1,y1,z1) => [id:int]"""
-        args = [vector3_1.x, vector3_1.y, vector3_1.z, vector3_2.x, vector3_2.y, vector3_2.z] #cringe
+        
         return int(self._conn.sendReceive("world.getBlocks", intFloor(args)))
 
-    def setBlock(self, vector3, blockType, data=None):
+    def setBlock(self, *args):
         """Set block (x,y,z,id,[data])"""
-        args = [vector3.x, vector3.y, vector3.z, blockType]
-        if data:
-            args.append(data)
         self._conn.send("world.setBlock", intFloor(args))
 
 
@@ -168,10 +162,10 @@ class Minecraft:
         self._conn.send("world.setBlocks", intFloor(args))
 
 
-    def getGroundHeight(self, x,z):
+    def getGroundHeight(self, *args):
         """Get the height of the world (x,z) => int"""
 
-        return int(self._conn.sendReceive("world.getHeight", intFloor([x,z])))
+        return int(self._conn.sendReceive("world.getHeight", intFloor(args)))
 
     def getPlayerEntityIds(self):
         """Get the entity ids of the connected players => [id:int]"""
@@ -190,6 +184,7 @@ class Minecraft:
         """Post a message to the game chat"""
         self._conn.send("chat.post", msg)
 
+    
     def setting(self, setting, status):
         """Set a world setting (setting, status). keys: world_immutable, nametags_visible"""
         self._conn.send("world.setting", setting, 1 if bool(status) else 0)
