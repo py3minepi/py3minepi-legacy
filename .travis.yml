@@ -1,8 +1,10 @@
 language: erlang
-
 env:
-  - ARCH=arm
-
+  - ARCH=arm TOXENV=py27
+  - ARCH=arm TOXENV=py32
+  - ARCH=arm TOXENV=cov
+matrix:
+    allow_failures:
+        - env: ARCH=arm TOXENV=cov
 script:
-  - "bash -ex .travis-ci.sh"
-
+  - bash -ex .travis-ci.sh

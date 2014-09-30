@@ -109,5 +109,3 @@ class blockType(Enum):
     FENCE_GATE = 107
     GLOWING_OBSIDIAN = 246
     NETHER_REACTOR_CORE = 247
-
-
