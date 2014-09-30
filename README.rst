@@ -5,6 +5,11 @@ README
     :alt: Build status
     :target: https://travis-ci.org/py3minepi/py3minepi
 
+.. image:: https://coveralls.io/repos/py3minepi/py3minepi/badge.png?branch=master
+    :alt: Coverage
+    :target: https://coveralls.io/r/py3minepi/py3minepi
+
+
 `Minecraft: Pi Edition <http://pi.minecraft.net/>`__ is awesome.
 
 However it uses Python 2. We're moving it to Python 3 (without any official
