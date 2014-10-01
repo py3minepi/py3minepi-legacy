@@ -57,34 +57,19 @@ class TestVec3(unittest.TestCase):
             )
         self.assertTrue(
             v1 != vDiff,
-            "Expected {} to be not equal to {} but wasn't " .format(v1, vDiff)
+            "Expected {} to be not equal to {} but wasn't ".format(v1, vDiff)
             )
+        otherVectors = [vXlarger, vYlarger, vZlarger,
+                        vXsmaller, vYsmaller, vZsmaller]
 
-        self.assertTrue(
-            v1 < vXlarger,
-            "Expected {} to be less than {} but wasn't " .format(v1, vXlarger)
-            )
-        self.assertTrue(
-            v1 < vYlarger,
-            "Expected {} to be less than {} but wasn't " .format(v1, vYlarger)
-            )
-        self.assertTrue(
-            v1 < vZlarger,
-            "Expected {} to be less than {} but wasn't " .format(v1, vZlarger)
-            )
+        for other in otherVectors:
+            self.assertTrue(v1 != other,
+            "Expected {} to be not equal to {} but wasn't ".format(v1, other))
 
-        self.assertTrue(
-            v1 > vXsmaller,
-            "Expected {} to be more than {} but wasn't " .format(v1, vXsmaller)
-            )
-        self.assertTrue(
-            v1 > vYsmaller,
-            "Expected {} to be more than {} but wasn't " .format(v1, vXsmaller)
-            )
-        self.assertTrue(
-            v1 > vZsmaller,
-            "Expected {} to be more than {} but wasn't " .format(v1, vXsmaller)
-            )
+        for other in otherVectors:
+            self.assertFalse(v1 == other,
+            "Expected {} to be not equal to {} but wasn't ".format(v1, other))
+
 
     def testCloning(self):
         v = Vec3(2, -3, 8)
@@ -125,13 +110,13 @@ class TestVec3(unittest.TestCase):
 
     def testLength(self):
         v = Vec3(2, -3, 8)
-        l = v.length
+        l = v.length()
         ls = ((2 * 2) + (-3 * -3) + (8 * 8))
         self.assertEqual(l, (ls ** 0.5))
 
     def testLengthSqr(self):
         v = Vec3(2, -3, 8)
-        ls = v.lengthSqr
+        ls = v.lengthSqr()
         self.assertEqual(ls, ((2 * 2) + (-3 * -3) + (8 * 8)))
 
     def testDistance(self):

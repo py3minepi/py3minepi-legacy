@@ -1,8 +1,6 @@
 import math
-from functools import total_ordering
 
 
-@total_ordering
 class Vec3:
     def __init__(self, x=0, y=0, z=0):
         self.x = x
@@ -20,11 +18,9 @@ class Vec3:
         self.z += rhs.z
         return self
 
-    @property
     def length(self):
-        return self.lengthSqr ** .5
+        return self.lengthSqr() ** .5
 
-    @property
     def lengthSqr(self):
         return self.x * self.x + self.y * self.y + self.z * self.z
 
@@ -62,17 +58,11 @@ class Vec3:
         self.y = func(self.y)
         self.z = func(self.z)
 
-    def __eq__(self, rhs):
-        dx = self.x - rhs.x
-        dy = self.y - rhs.y
-        dz = self.z - rhs.z
-        return (dx == 0 and dy == 0 and dz == 0)
+    def __eq__(self, other):
+        return all([self.x == other.x, self.y == other.y, self.z == other.z])
 
-    def __lt__(self, rhs):
-        dx = self.x - rhs.x
-        dy = self.y - rhs.y
-        dz = self.z - rhs.z
-        return (dx < 0 or dy < 0 or dz < 0)
+    def __ne__(self, other):
+        return not (self == other)
 
     def iround(self):
         self._map(lambda v: int(v + 0.5))
