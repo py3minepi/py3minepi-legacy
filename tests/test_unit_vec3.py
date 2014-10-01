@@ -153,7 +153,3 @@ class TestVec3(unittest.TestCase):
         v.rotateRight()
         expectVec = Vec3(-8, -3, 2)
         self.assertEqual(v, expectVec)
-
-if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestVec3)
-    unittest.TextTestRunner(verbosity=2).run(suite)
