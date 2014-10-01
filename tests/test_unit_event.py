@@ -46,7 +46,3 @@ class TestEvent(unittest.TestCase):
         self.assertEqual(evnt.pos.z, z)
         self.assertEqual(evnt.face, face)
         self.assertEqual(evnt.entityId, entity)
-
-if __name__ == '__main__':
-    suite = unittest.TestLoader().loadTestsFromTestCase(TestEvent)
-    unittest.TextTestRunner(verbosity=2).run(suite)
