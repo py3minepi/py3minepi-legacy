@@ -1,42 +1,71 @@
-import sys
-if sys.version_info < (3, 4):
-    from flufl.enum import Enum
-else:
-    from enum import Enum
+from enum import IntEnum
+from functools import total_ordering
 
 
+@total_ordering
 class Block:
     """
-    Minecraft PI block description. Can be sent to Minecraft.setBlock/s
-    block.type = the blockID of a block (It's meterial)
-    block.data = A unknown member that does something
-    The default type for blocks is dirt
-    """
+        Minecraft PI block description. Can be sent to Minecraft.setBlock/s
+        block.type = the blockID of a block (It's material)
+        block.data = The variant of the type of block.
+        For example the colour of wool or the orientation of stairs
+        The default type for blocks is dirt
+        """
 
     def __init__(self, type=3, data=0):
         self.type = type
         self.data = data
 
-    def __cmp__(self, rhs):
-        return hash(self) - hash(rhs)
+    def __eq__(self, rhs):
+        """
+            Equality override
+            Two blocks are equal only if their hashes are equal
+            """
+        return hash(self) == hash(rhs)
+
+    def __lt__(self, rhs):
+        """
+            Less than override
+            One block is less than another if hash is less
+            """
+        return hash(self) < hash(rhs)
 
     def __hash__(self):
-        return (self.id << 8) + self.data
+        """
+            Override of hash generation
+            Returns a unique representation of contents of block
+            """
+        return (self.type << 8) + self.data
 
-    # TODO: This looks wierd, does it have any use?
     def __iter__(self):
-        """Allows a Block to be sent whenever id [and data] is needed"""
-        return iter((self.id, self.data))
+        """
+            Returns an Iterator of the contents of the Block class
+            Makes the Block an Iterable object
+            This means that Block can be treated like a list/tuple in places
+            list/tuple of type and data
+            For example when flattening lists or *args
+            Allows a Block to be sent whenever id [and data] is needed
+            """
+        return iter((self.type, self.data))
 
     def __repr__(self):
-        return 'Block({}, {:.2f})'.format(self.id, self.data)
+        """ Override string representation """
+        return 'Block({:d}, {:d})'.format(self.type, self.data)
 
-    # TODO: find out if this has any use
     def withData(self, data):
-        return Block(self.id, data)
+        """
+            Returns a new block with the same type as the invoking block but
+            with the passed in data value
+            """
+        return Block(self.type, data)
+
+    @property
+    def id(self):
+        """ Here for backwards compatibility for previous attribute name """
+        return self.type
 
 
-class blockType(Enum):
+class blockType(IntEnum):
     AIR = 0
     STONE = 1
     GRASS = 2
