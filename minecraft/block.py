@@ -17,9 +17,6 @@ class Block:
         self.type = type
         self.data = data
 
-    def __cmp__(self, rhs):
-        return hash(self) - hash(rhs)
-
     def __hash__(self):
         return (self.id << 8) + self.data
 
