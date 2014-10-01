@@ -50,23 +50,27 @@ function setup_arm_chroot {
     sudo chroot ${CHROOT_DIR} bash -c "cd ${TRAVIS_BUILD_DIR} && ./.travis-ci.sh"
 }
 
-if [ -e "/.chroot_is_done" ]; then
-  # We are inside ARM chroot
-  echo "--- Running inside chrooted environment"
+function run_tests {
+	. ./envvars.sh
 
-  . ./envvars.sh
+	echo "--- Running tests"
+	echo "--- Environment: $(uname -a)"
+	echo "--- Working directory: $(pwd)"
+	ls -la
 
-  echo "--- Running tests"
-  echo "--- Environment: $(uname -a)"
-  echo "--- Working directory: $(pwd)"
-  ls -la
+	sudo pip install tox
+	tox
+}
 
-  sudo pip install tox
-  tox
-else
-  if [ "${ARCH}" = "arm" ]; then
-    # ARM test run, need to set up chrooted environment first
+if [ "${ARCH}" = "arm" ]; then
+  if [ -e "/.chroot_is_done" ]; then
+    echo "--- Running inside chrooted environment"
+
+    run_tests
+  else
     echo "--- Setting up chrooted ARM environment"
     setup_arm_chroot
   fi
+else
+  run_tests
 fi
