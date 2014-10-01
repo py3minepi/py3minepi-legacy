@@ -25,7 +25,7 @@ class BlockEvent:
             self.face,
             self.entityId
         )
-        return 'BlockEvent({}, {:.2f}, {:.2f}, {:.2f}, {:.2f}, {})'.format(*args)
+        return 'BlockEvent({}, {:.2f}, {:.2f}, {:.2f}, {:d}, {:d})'.format(*args)
 
     @staticmethod
     def Hit(x, y, z, face, entityId):
