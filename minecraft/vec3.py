@@ -58,18 +58,6 @@ class Vec3:
         self.y = func(self.y)
         self.z = func(self.z)
 
-    def __cmp__(self, rhs):
-        dx = self.x - rhs.x
-        if dx != 0:
-            return dx
-        dy = self.y - rhs.y
-        if dy != 0:
-            return dy
-        dz = self.z - rhs.z
-        if dz != 0:
-            return dz
-        return 0
-
     def __eq__(self, other):
         return all([self.x == other.x, self.y == other.y, self.z == other.z])
 
