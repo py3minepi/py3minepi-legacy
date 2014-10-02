@@ -1,8 +1,6 @@
 import sys
-if sys.version_info < (3, 4):
-    from flufl.enum import Enum
-else:
-    from enum import Enum
+
+from enum import Enum
 
 
 class Block:
