@@ -11,7 +11,7 @@ Currently it doesn't actually test the __success__ of any of these commands, but
 import pytest
 
 from mcpi import minecraft
-from mcpi.minecraft import block
+from mcpi import block
 from time import sleep
 
 @pytest.fixture(scope="module")
