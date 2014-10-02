@@ -1,5 +1,3 @@
-import sys
-
 from enum import Enum
 
 

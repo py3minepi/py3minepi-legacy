@@ -31,8 +31,8 @@ def test_vec3():
     assert c - b == a
     assert a + a == a * 2
 
-    assert a - a == Vec3(0,0,0)
-    assert a + (-a) == Vec3(0,0,0)
+    assert a - a == Vec3(0, 0, 0)
+    assert a + (-a) == Vec3(0, 0, 0)
 
     # Test repr
     e = eval(repr(vector3))
