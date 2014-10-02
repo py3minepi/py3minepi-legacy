@@ -72,5 +72,7 @@ if [ "${ARCH}" = "arm" ]; then
     setup_arm_chroot
   fi
 else
+  sudo apt-get install -qq -y ${GUEST_DEPENDENCIES} # Because we might not be running in a Pythonic environment
+
   run_tests
 fi
