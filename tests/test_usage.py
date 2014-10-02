@@ -14,6 +14,7 @@ from mcpi import minecraft
 from mcpi import block
 from time import sleep
 
+
 @pytest.fixture(scope="module")
 def mc():
     return minecraft.Minecraft.create()
