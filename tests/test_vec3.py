@@ -1,4 +1,4 @@
-from minecraft.vec3 import Vec3
+from mcpi.vec3 import Vec3
 
 
 def test_vec3():
