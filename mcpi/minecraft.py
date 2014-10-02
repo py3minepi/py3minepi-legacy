@@ -17,6 +17,7 @@ from .vec3 import Vec3
 from .event import BlockEvent
 from .block import Block
 import math
+import warnings
 
 
 def intFloor(*args):
@@ -187,6 +188,11 @@ class Minecraft:
 
     @staticmethod
     def create(address="localhost", port=4711):
+        warnings.warn(
+            "The `mc = Minecraft.create(address,port)` style is deprecated; " +
+            "please use the more Pythonic `mc = Minecraft(address, port)` style " +
+            " (or just `mc = Minecraft()` for the default address/port)",
+            DeprecationWarning)
         return Minecraft(address, port)
 
 if __name__ == "__main__":
