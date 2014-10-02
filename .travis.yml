@@ -2,6 +2,6 @@ language: erlang
 env:
   - ARCH=arm TOXENV=py27
   - ARCH=arm TOXENV=py32
-  - ARCH=arm TOXENV=cov
+  - TOXENV=cov
 script:
   - bash -ex .travis-ci.sh
