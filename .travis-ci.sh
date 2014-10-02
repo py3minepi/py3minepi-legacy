@@ -51,8 +51,6 @@ function setup_arm_chroot {
 }
 
 function run_tests {
-	. ./envvars.sh
-
 	echo "--- Running tests"
 	echo "--- Environment: $(uname -a)"
 	echo "--- Working directory: $(pwd)"
@@ -65,6 +63,8 @@ function run_tests {
 if [ "${ARCH}" = "arm" ]; then
   if [ -e "/.chroot_is_done" ]; then
     echo "--- Running inside chrooted environment"
+
+    . ./envvars.sh
 
     run_tests
   else
