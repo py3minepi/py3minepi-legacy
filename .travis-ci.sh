@@ -51,17 +51,17 @@ function setup_arm_chroot {
 }
 
 function run_tests {
-	if [ -f "./envvars.sh" ]; then
-		. ./envvars.sh
-	fi
+    if [ -f "./envvars.sh" ]; then
+        . ./envvars.sh
+    fi
 
-	echo "--- Running tests"
-	echo "--- Environment: $(uname -a)"
-	echo "--- Working directory: $(pwd)"
-	ls -la
+    echo "--- Running tests"
+    echo "--- Environment: $(uname -a)"
+    echo "--- Working directory: $(pwd)"
+    ls -la
 
-	sudo pip install tox
-	tox
+    sudo pip install tox
+    tox
 }
 
 if [ "${ARCH}" = "arm" ]; then
