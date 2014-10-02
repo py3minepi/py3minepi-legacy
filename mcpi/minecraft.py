@@ -185,6 +185,10 @@ class Minecraft:
         """Set a world setting (setting, status). keys: world_immutable, nametags_visible"""
         self._conn.send("world.setting", setting, 1 if bool(status) else 0)
 
+    @staticmethod
+    def create(address="localhost", port=4711):
+        return Minecraft(address, port)
+
 if __name__ == "__main__":
     mc = Minecraft()
     mc.postToChat("Hello, Minecraft!")
