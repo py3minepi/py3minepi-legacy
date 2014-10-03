@@ -10,7 +10,7 @@ CHROOT_ARCH=armhf
 HOST_DEPENDENCIES="debootstrap qemu-user-static binfmt-support sbuild"
 
 # Debian package dependencies for the chrooted environment
-GUEST_DEPENDENCIES="sudo python2.7 python3 python-pip python3-pip"
+GUEST_DEPENDENCIES="sudo python2.7 python3 python-pip python3-pip git"
 
 # Command used to run the tests
 
@@ -50,23 +50,31 @@ function setup_arm_chroot {
     sudo chroot ${CHROOT_DIR} bash -c "cd ${TRAVIS_BUILD_DIR} && ./.travis-ci.sh"
 }
 
-if [ -e "/.chroot_is_done" ]; then
-  # We are inside ARM chroot
-  echo "--- Running inside chrooted environment"
+function run_tests {
+    if [ -f "./envvars.sh" ]; then
+        . ./envvars.sh
+    fi
 
-  . ./envvars.sh
+    echo "--- Running tests"
+    echo "--- Environment: $(uname -a)"
+    echo "--- Working directory: $(pwd)"
+    ls -la
 
-  echo "--- Running tests"
-  echo "--- Environment: $(uname -a)"
-  echo "--- Working directory: $(pwd)"
-  ls -la
+    sudo pip install tox
+    tox
+}
 
-  sudo pip install tox
-  tox
-else
-  if [ "${ARCH}" = "arm" ]; then
-    # ARM test run, need to set up chrooted environment first
+if [ "${ARCH}" = "arm" ]; then
+  if [ -e "/.chroot_is_done" ]; then
+    echo "--- Running inside chrooted environment"
+
+    run_tests
+  else
     echo "--- Setting up chrooted ARM environment"
     setup_arm_chroot
   fi
+else
+  sudo apt-get install -qq -y python-pip # Because we might not be running in a Pythonic environment
+
+  run_tests
 fi

@@ -19,7 +19,7 @@ class Vec3:
         return self
 
     def length(self):
-        return self.lengthSqr ** .5
+        return self.lengthSqr() ** .5
 
     def lengthSqr(self):
         return self.x * self.x + self.y * self.y + self.z * self.z
@@ -57,6 +57,12 @@ class Vec3:
         self.x = func(self.x)
         self.y = func(self.y)
         self.z = func(self.z)
+
+    def __eq__(self, other):
+        return all([self.x == other.x, self.y == other.y, self.z == other.z])
+
+    def __ne__(self, other):
+        return not (self == other)
 
     def __eq__(self, other):
         return all([self.x == other.x, self.y == other.y, self.z == other.z])
