@@ -12,11 +12,15 @@ import pytest
 
 from mcpi import minecraft
 from mcpi import block
+from mcpi.vec3 import Vec3
 from time import sleep
 
 
-@pytest.fixture(scope="module")
-def mc():
+@pytest.fixture(autouse=True)
+def mc(monkeypatch):
+    monkeypatch.setattr("socket.socket.connect", lambda x, y: None)
+    monkeypatch.setattr("socket.socket.sendall", lambda x, y: None)
+    monkeypatch.setattr("mcpi.minecraft.CmdPositioner.getPos", lambda x, y: Vec3(0.1, 0.1, 0.1))
     return minecraft.Minecraft.create()
 
 
