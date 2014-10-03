@@ -5,3 +5,5 @@ env:
   - TOXENV=cov
 script:
   - bash -ex .travis-ci.sh
+matrix:
+  fast_finish: true
