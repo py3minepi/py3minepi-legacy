@@ -16,6 +16,7 @@ from .connection import Connection
 from .vec3 import Vec3
 from .event import BlockEvent
 from .block import Block
+from .util import flatten
 import math
 import warnings
 
@@ -28,7 +29,7 @@ def intFloor(*args):
 
     Returns integers (int).
     """
-    return map(math.floor, args)
+    return map(math.floor, flatten(args))
 
 
 class CmdPositioner(object):
