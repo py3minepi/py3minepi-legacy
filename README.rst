@@ -57,6 +57,12 @@ Some other things you should keep in mind:
   reason.
 - KISS!
 
+For backwards compatibility with Python 2, please insert this header in every
+Python module::
+
+    # -*- coding: utf-8 -*-
+    from __future__ import print_function, division, absolute_import, unicode_literals
+
 
 Testing
 -------
