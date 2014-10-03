@@ -42,18 +42,18 @@ class CmdPositioner(object):
         s = self.conn.sendReceive(self.pkg + ".getPos", id)
         return Vec3(*map(float, s.split(",")))
 
-    def setPos(self, id, vector3):
+    def setPos(self, id, *args):
         """Set entity position (entityId:int, x,y,z)"""
-        self.conn.send(self.pkg + ".setPos", id, vector3.x, vector3.y, vector3.z)
+        self.conn.send(self.pkg + ".setPos", id, args)
 
     def getTilePos(self, id):
         """Get entity tile position (entityId:int) => Vec3"""
         s = self.conn.sendReceive(self.pkg + ".getTile", id)
         return Vec3(*map(float, s.split(",")))
 
-    def setTilePos(self, id, vector3):
+    def setTilePos(self, id, *args):
         """Set entity tile position (entityId:int, x,y,z)"""
-        self.conn.send(self.pkg + ".setTile", id, intFloor(vector3.x, vector3.y, vector3.z))
+        self.conn.send(self.pkg + ".setTile", id, intFloor(*args))
 
     def setting(self, setting, status):
         """Set a player setting (setting, status). keys: autojump"""
