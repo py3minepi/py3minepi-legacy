@@ -64,12 +64,6 @@ class Vec3:
     def __ne__(self, other):
         return not (self == other)
 
-    def __eq__(self, other):
-        return all([self.x == other.x, self.y == other.y, self.z == other.z])
-
-    def __ne__(self, other):
-        return not (self == other)
-
     def iround(self):
         self._map(lambda v: int(v + 0.5))
 
