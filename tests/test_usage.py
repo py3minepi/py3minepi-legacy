@@ -70,11 +70,13 @@ def test_dropping_blocks_as_you_walk(mc):
     'The following code will drop a flower behind you wherever you walk'
 
     We're not walking, and we don't want the infinite loop from the example, but this should do
+
+    Note that the actual example uses xrange which is not in Python 3, so lets test with range
     """
 
     flower = 38
 
-    for i in xrange(10):
+    for i in range(10):
         x, y, z = mc.player.getPos()
         mc.setBlock(x, y, z, flower)
         sleep(0.1)
