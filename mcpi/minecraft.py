@@ -31,7 +31,7 @@ def intFloor(*args):
     return map(math.floor, args)
 
 
-class CmdPositioner:
+class CmdPositioner(object):
     """Methods for setting and getting positions"""
     def __init__(self, connection, packagePrefix):
         self.conn = connection
