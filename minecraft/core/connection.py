@@ -1,25 +1,32 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, division, absolute_import, unicode_literals
 
+import errno
 import socket
 import select
 import logging
+
+from . import exceptions
 
 
 logger = logging.getLogger(__name__)
 
 
-class RequestError(RuntimeError):
-    pass
-
-
 class Connection(object):
-    """
-    TCP socket connection to a Minecraft Pi game. Default port is 4711.
-    """
     def __init__(self, host, port):
+        """
+        TCP socket connection to a Minecraft Pi game. Default port is 4711.
+        """
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.socket.connect((host, port))
+        try:
+            self.socket.connect((host, port))
+        except socket.error as e:
+            if e.errno != errno.ECONNREFUSED:
+                # Not the error we are looking for, re-raise
+                raise e
+            msg = 'Could not connect to Minecraft server at %s:%s (connection refused).'
+            raise exceptions.ConnectionError(msg % (host, port))
+
         self.last_sent = ''
 
     def drain(self):
@@ -51,7 +58,7 @@ class Connection(object):
         s = self.socket.makefile('r').readline().rstrip('\n')
         logger.info('Read: %s', s)
         if s == 'Fail':
-            raise RequestError('%s failed' % self.last_sent.strip())
+            raise exceptions.APIError('%s failed' % self.last_sent.strip())
         return s
 
     def send_receive(self, func, *args):
