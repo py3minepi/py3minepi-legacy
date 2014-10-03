@@ -109,12 +109,12 @@ class Minecraft(object):
 
     def __init__(self, host='127.0.0.1', port=4711):
         logger.info('Initializing connection to %s:%d...', host, port)
-        self.conn = Connection(host, port)
+        self._conn = Connection(host, port)
         logger.info('Loading world commands...')
-        self.world = WorldCommand(self.conn)
+        self.world = WorldCommand(self._conn)
         logger.info('Loading chat commands...')
-        self.chat = ChatCommand(self.conn)
+        self.chat = ChatCommand(self._conn)
         logger.info('Loading player commands...')
-        self.player = PlayerCommand(self.conn)
+        self.player = PlayerCommand(self._conn)
         logger.info('Loading camera commands...')
-        self.camera = CameraCommand(self.conn)
+        self.camera = CameraCommand(self._conn)
