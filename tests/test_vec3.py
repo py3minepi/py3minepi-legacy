@@ -1,5 +1,6 @@
 from minecraft.vec3 import Vec3
 
+
 class TestVec3():
     """ Test the functions of the Vec3 class """
 
@@ -20,7 +21,6 @@ class TestVec3():
         assert vector3.x != -1
         assert vector3.y != +2
         assert vector3.z != -3
-
 
     def test_representation(self):
         # Test repr
@@ -74,7 +74,6 @@ class TestVec3():
         assert v1.x == -v_inverse.x
         assert v1.y == -v_inverse.y
         assert v1.z == -v_inverse.z
-
 
     def test_addition(self):
         a = Vec3(10, -3, 4)
