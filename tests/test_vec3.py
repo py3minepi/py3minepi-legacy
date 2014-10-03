@@ -114,9 +114,11 @@ class TestVec3():
         coords_two = [-4, 5, 12]
         v1 = Vec3(coords_one[0], coords_one[1], coords_one[2])
         v2 = Vec3(coords_two[0], coords_two[1], coords_two[2])
-        expect_dist = (((coords_two[0] - coords_one[0]) ** 2) +
-                      ((coords_two[1] - coords_one[1]) ** 2) +
-                      ((coords_two[2] - coords_one[2]) ** 2)) ** 0.5
+        expect_dist = (
+            ((coords_two[0] - coords_one[0]) ** 2) +
+            ((coords_two[1] - coords_one[1]) ** 2) +
+            ((coords_two[2] - coords_one[2]) ** 2)
+        ) ** 0.5
         dist = v1.distanceTo(v2)
         assert dist == expect_dist
 
