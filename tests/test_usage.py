@@ -20,7 +20,9 @@ from time import sleep
 def mc(monkeypatch):
     monkeypatch.setattr("socket.socket.connect", lambda x, y: None)
     monkeypatch.setattr("socket.socket.sendall", lambda x, y: None)
-    monkeypatch.setattr("mcpi.connection.Connection.send", lambda x, y, z: None)
+    def dummy_send(_, *args):
+        return None
+    monkeypatch.setattr("mcpi.connection.Connection.send", dummy_send)
     monkeypatch.setattr("mcpi.minecraft.CmdPositioner.getPos", lambda x, y: Vec3(0.1, 0.1, 0.1))
     return minecraft.Minecraft.create()
 
