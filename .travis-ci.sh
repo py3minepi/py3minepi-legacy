@@ -16,6 +16,7 @@ GUEST_DEPENDENCIES="sudo python2.7 python3 python-pip python3-pip git"
 
 function setup_arm_chroot {
     # Host dependencies
+    sudo apt-get update
     sudo apt-get install -qq -y ${HOST_DEPENDENCIES}
 
     # Create chrooted environment
@@ -74,6 +75,7 @@ if [ "${ARCH}" = "arm" ]; then
     setup_arm_chroot
   fi
 else
+  sudo apt-get update
   sudo apt-get install -qq -y python-pip # Because we might not be running in a Pythonic environment
 
   run_tests
