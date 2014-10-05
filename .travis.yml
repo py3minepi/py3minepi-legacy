@@ -6,3 +6,5 @@ env:
   - TOXENV=flake8
 script:
   - bash -ex .travis-ci.sh
+matrix:
+  fast_finish: true

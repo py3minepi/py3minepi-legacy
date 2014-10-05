@@ -1,4 +1,4 @@
-from minecraft.event import BlockEvent
+from mcpi.event import BlockEvent
 
 
 class TestEvent():
