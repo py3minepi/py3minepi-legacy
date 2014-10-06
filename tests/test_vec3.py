@@ -1,5 +1,6 @@
 from mcpi.vec3 import Vec3
 
+
 class TestVec3():
     """ Test the functions of the Vec3 class """
 
@@ -20,7 +21,6 @@ class TestVec3():
         assert vector3.x != -1
         assert vector3.y != +2
         assert vector3.z != -3
-
 
     def test_representation(self):
         # Test repr
@@ -75,7 +75,6 @@ class TestVec3():
         assert v1.y == -v_inverse.y
         assert v1.z == -v_inverse.z
 
-
     def test_addition(self):
         a = Vec3(10, -3, 4)
         b = Vec3(-7, 1, 2)
@@ -115,9 +114,11 @@ class TestVec3():
         coords_two = [-4, 5, 12]
         v1 = Vec3(coords_one[0], coords_one[1], coords_one[2])
         v2 = Vec3(coords_two[0], coords_two[1], coords_two[2])
-        expect_dist = (((coords_two[0] - coords_one[0]) ** 2) +
-                      ((coords_two[1] - coords_one[1]) ** 2) +
-                      ((coords_two[2] - coords_one[2]) ** 2)) ** 0.5
+        expect_dist = (
+            ((coords_two[0] - coords_one[0]) ** 2) +
+            ((coords_two[1] - coords_one[1]) ** 2) +
+            ((coords_two[2] - coords_one[2]) ** 2)
+        ) ** 0.5
         dist = v1.distanceTo(v2)
         assert dist == expect_dist
 

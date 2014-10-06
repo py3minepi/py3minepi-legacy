@@ -19,7 +19,7 @@ class TestEvent():
     def test_representation(self):
         data = [0, 14, 15, 16, 1, 1]
         event = BlockEvent(data[0], data[1], data[2],
-                          data[3], data[4], data[5])
+                           data[3], data[4], data[5])
         # block hit event has integer number converted in rep to text
         expected = "BlockEvent(BlockEvent.HIT, 14.00, 15.00, 16.00, 1.00, 1)"
         rep = repr(event)

@@ -3,6 +3,7 @@ env:
   - ARCH=arm TOXENV=py27
   - ARCH=arm TOXENV=py32
   - TOXENV=cov
+  - TOXENV=flake8
 script:
   - bash -ex .travis-ci.sh
 matrix:
