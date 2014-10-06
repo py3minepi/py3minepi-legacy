@@ -2,9 +2,9 @@
 # Based on a test script from avsm/ocaml repo https://github.com/avsm/ocaml
 
 CHROOT_DIR=/tmp/arm-chroot
-MIRROR=http://archive.raspbian.org/raspbian
-VERSION=wheezy
-CHROOT_ARCH=armhf
+
+CHROOT_TARBALL_URL="https://s3.amazonaws.com/py3minepi-arm-chroot/py3minepi/arm-chroot/8/8.1/tmp/arm-chroot.tar.bz2"
+CHROOT_TARBALL="/tmp/$(basename $CHROOT_TARBALL_URL)"
 
 # Debian package dependencies for the host
 HOST_DEPENDENCIES="debootstrap qemu-user-static binfmt-support sbuild"
@@ -15,18 +15,9 @@ GUEST_DEPENDENCIES="sudo python2.7 python3 python-pip python3-pip git"
 # Command used to run the tests
 
 function setup_arm_chroot {
-    # Host dependencies
-    sudo apt-get update
-    sudo apt-get install -qq -y ${HOST_DEPENDENCIES}
 
-    # Create chrooted environment
-    sudo mkdir ${CHROOT_DIR}
-    sudo debootstrap --foreign --no-check-gpg --include=fakeroot,build-essential \
-        --arch=${CHROOT_ARCH} ${VERSION} ${CHROOT_DIR} ${MIRROR}
-    sudo cp /usr/bin/qemu-arm-static ${CHROOT_DIR}/usr/bin/
-    sudo chroot ${CHROOT_DIR} ./debootstrap/debootstrap --second-stage
-    sudo sbuild-createchroot --arch=${CHROOT_ARCH} --foreign --setup-only \
-        ${VERSION} ${CHROOT_DIR} ${MIRROR}
+	curl --silent --output ${CHROOT_TARBALL}
+	tar -C / -jxf ${CHROOT_TARBALL}
 
     # Create file with environment variables which will be used inside chrooted
     # environment
