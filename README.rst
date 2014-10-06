@@ -9,6 +9,10 @@ README
     :alt: Coverage
     :target: https://coveralls.io/r/py3minepi/py3minepi
 
+.. image:: https://landscape.io/github/py3minepi/py3minepi/master/landscape.png
+    :alt: Code Health
+    :target: https://landscape.io/github/py3minepi/py3minepi
+
 
 `Minecraft: Pi Edition <http://pi.minecraft.net/>`__ is awesome.
 
