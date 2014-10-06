@@ -16,7 +16,9 @@ from .connection import Connection
 from .vec3 import Vec3
 from .event import BlockEvent
 from .block import Block
+from .util import flatten
 import math
+import warnings
 
 
 def intFloor(*args):
@@ -27,10 +29,10 @@ def intFloor(*args):
 
     Returns integers (int).
     """
-    return map(math.floor, args)
+    return map(math.floor, flatten(args))
 
 
-class CmdPositioner:
+class CmdPositioner(object):
     """Methods for setting and getting positions"""
     def __init__(self, connection, packagePrefix):
         self.conn = connection
@@ -41,18 +43,18 @@ class CmdPositioner:
         s = self.conn.sendReceive(self.pkg + ".getPos", id)
         return Vec3(*map(float, s.split(",")))
 
-    def setPos(self, id, vector3):
+    def setPos(self, id, *args):
         """Set entity position (entityId:int, x,y,z)"""
-        self.conn.send(self.pkg + ".setPos", id, vector3.x, vector3.y, vector3.z)
+        self.conn.send(self.pkg + ".setPos", id, args)
 
     def getTilePos(self, id):
         """Get entity tile position (entityId:int) => Vec3"""
         s = self.conn.sendReceive(self.pkg + ".getTile", id)
         return Vec3(*map(float, s.split(",")))
 
-    def setTilePos(self, id, vector3):
+    def setTilePos(self, id, *args):
         """Set entity tile position (entityId:int, x,y,z)"""
-        self.conn.send(self.pkg + ".setTile", id, intFloor(vector3.x, vector3.y, vector3.z))
+        self.conn.send(self.pkg + ".setTile", id, intFloor(*args))
 
     def setting(self, setting, status):
         """Set a player setting (setting, status). keys: autojump"""
@@ -184,6 +186,15 @@ class Minecraft:
     def setting(self, setting, status):
         """Set a world setting (setting, status). keys: world_immutable, nametags_visible"""
         self._conn.send("world.setting", setting, 1 if bool(status) else 0)
+
+    @staticmethod
+    def create(address="localhost", port=4711):
+        warnings.warn(
+            "The `mc = Minecraft.create(address,port)` style is deprecated; " +
+            "please use the more Pythonic `mc = Minecraft(address, port)` style " +
+            " (or just `mc = Minecraft()` for the default address/port)",
+            DeprecationWarning)
+        return Minecraft(address, port)
 
 if __name__ == "__main__":
     mc = Minecraft()
