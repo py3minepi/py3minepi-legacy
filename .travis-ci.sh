@@ -16,7 +16,7 @@ GUEST_DEPENDENCIES="sudo python2.7 python3 python-pip python3-pip git"
 
 function setup_arm_chroot {
 
-	curl --silent --output ${CHROOT_TARBALL}
+	curl --silent --output ${CHROOT_TARBALL} ${CHROOT_TARBALL_URL}
 	tar -C / -jxf ${CHROOT_TARBALL}
 
     # Create file with environment variables which will be used inside chrooted
