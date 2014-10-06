@@ -18,6 +18,10 @@ function setup_arm_chroot {
 
 	curl --silent --output ${CHROOT_TARBALL} ${CHROOT_TARBALL_URL}
 	sudo tar -C / -jxf ${CHROOT_TARBALL}
+	sudo mount -o bind /dev ${CHROOT_DIR}/dev
+	sudo mount -t proc none ${CHROOT_DIR}/proc
+	sudo mount -o bind /sys ${CHROOT_DIR}/sys
+	sudo mount -o bind /tmp ${CHROOT_DIR}/tmp
 
     # Create file with environment variables which will be used inside chrooted
     # environment
