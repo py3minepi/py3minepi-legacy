@@ -53,6 +53,8 @@ def test_set_block(mc):
     x, y, z = mc.player.getPos()
     mc.setBlock(x + 1, y, z, 1)
 
+    assert mc._conn.last_command_sent == "world.setBlock(%d,%d,%d,%d)" % (x + 1, y, z, 1)
+
 
 def test_blocks_as_variables(mc):
     x, y, z = mc.player.getPos()
