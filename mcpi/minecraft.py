@@ -29,7 +29,7 @@ def intFloor(*args):
 
     Returns integers (int).
     """
-    return map(math.floor, flatten(args))
+    return [int(math.floor(a)) for a in flatten(args)]
 
 
 class CmdPositioner(object):
