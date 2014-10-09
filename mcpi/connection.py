@@ -52,6 +52,14 @@ class Connection:
         """
         flattened_params = ','.join(map(str, itertools.chain.from_iterable(data)))
         s = '{}({})\n'.format(f, flattened_params)
+
+        self._send(s)
+
+    def _send(self, s):
+        """
+        The actual socket interaction from self.send, extracted for easier mocking
+        and testing
+        """
         self.drain()
         self.lastSent = s
 
