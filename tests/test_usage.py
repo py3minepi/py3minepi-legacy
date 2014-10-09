@@ -40,6 +40,7 @@ def test_hello_world(mc):
 
     assert mc._conn.last_command_sent == "chat.post(Hello world)\n"
 
+
 def test_get_pos(mc):
     x, y, z = mc.player.getPos()
 
