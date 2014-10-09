@@ -23,8 +23,15 @@ def mc(monkeypatch):
     monkeypatch.setattr("socket.socket.connect", lambda x, y: None)
     monkeypatch.setattr("socket.socket.sendall", lambda x, y: None)
 
-    def dummy_send(_, *args):
-        return None
+    def dummy_send(self, f, *data):
+        """
+        Really nasty reimplementation of Connection.send with copy-pasted logic just to verify the actual command we're sending
+        """
+
+        from mcpi.util import flatten_parameters_to_string
+
+        # If you want to run these tests in parallel, I apologise
+        self.last_command_sent = "%s(%s)\n" % (f, flatten_parameters_to_string(data))
 
     monkeypatch.setattr("mcpi.connection.Connection.send", dummy_send)
     monkeypatch.setattr("mcpi.minecraft.CmdPositioner.getPos", lambda x, y: Vec3(0.1, 0.1, 0.1))
