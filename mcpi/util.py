@@ -1,5 +1,10 @@
 import collections
 
+try:
+    basestring
+except NameError:
+    basestring = (str, bytes)
+
 
 def flatten(l):
     for e in l:
