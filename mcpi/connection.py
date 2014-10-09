@@ -2,7 +2,6 @@ import socket
 import errno
 import select
 import sys
-import itertools
 
 from . import exceptions
 from .util import flatten_parameters_to_string
