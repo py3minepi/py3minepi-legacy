@@ -25,7 +25,8 @@ def mc(monkeypatch):
 
     def dummy_send(self, f, *data):
         """
-        Really nasty reimplementation of Connection.send with copy-pasted logic just to verify the actual command we're sending
+        Really nasty reimplementation of Connection.send with copy-pasted logic just to verify
+        the actual command we're sending
         """
 
         from mcpi.util import flatten_parameters_to_string
