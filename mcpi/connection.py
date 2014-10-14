@@ -2,9 +2,9 @@ import socket
 import errno
 import select
 import sys
-import itertools
 
 from . import exceptions
+from .util import flatten_parameters_to_string
 
 
 class RequestError(Exception):
@@ -50,8 +50,15 @@ class Connection:
         """
         Sends data. Note that a trailing newline '\n' is added here.
         """
-        flattened_params = ','.join(map(str, itertools.chain.from_iterable(data)))
-        s = '{}({})\n'.format(f, flattened_params)
+        s = "%s(%s)\n" % (f, flatten_parameters_to_string(data))
+
+        self._send(s)
+
+    def _send(self, s):
+        """
+        The actual socket interaction from self.send, extracted for easier mocking
+        and testing
+        """
         self.drain()
         self.lastSent = s
 

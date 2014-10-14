@@ -23,16 +23,22 @@ def mc(monkeypatch):
     monkeypatch.setattr("socket.socket.connect", lambda x, y: None)
     monkeypatch.setattr("socket.socket.sendall", lambda x, y: None)
 
-    def dummy_send(_, *args):
-        return None
+    def dummy_send(self, command):
+        """
+        Log, don't send, the command
+        """
 
-    monkeypatch.setattr("mcpi.connection.Connection.send", dummy_send)
+        self.last_command_sent = command
+
+    monkeypatch.setattr("mcpi.connection.Connection._send", dummy_send)
     monkeypatch.setattr("mcpi.minecraft.CmdPositioner.getPos", lambda x, y: Vec3(0.1, 0.1, 0.1))
     return minecraft.Minecraft.create()
 
 
 def test_hello_world(mc):
     mc.postToChat("Hello world")
+
+    assert mc._conn.last_command_sent == "chat.post(Hello world)\n"
 
 
 def test_get_pos(mc):
@@ -47,6 +53,8 @@ def test_teleport(mc):
 def test_set_block(mc):
     x, y, z = mc.player.getPos()
     mc.setBlock(x + 1, y, z, 1)
+
+    assert mc._conn.last_command_sent == "world.setBlock(%d,%d,%d,%d)\n" % (x + 1, y, z, 1)
 
 
 def test_blocks_as_variables(mc):
