@@ -35,7 +35,7 @@ class Command(object):
         return self._conn.send_receive(full_func, *args)
 
 
-class WorldCommand(Command):
+class World(Command):
     _func_prefix = 'world'
 
     def get_block(self, x, y, z):
@@ -63,7 +63,7 @@ class WorldCommand(Command):
         pass
 
 
-class ChatCommand(Command):
+class Chat(Command):
     _func_prefix = 'chat'
 
     def say(self, message):
@@ -71,7 +71,7 @@ class ChatCommand(Command):
         pass
 
 
-class PlayerCommand(Command):
+class Player(Command):
     _func_prefix = 'player'
 
     def get_tile(self):
@@ -89,7 +89,7 @@ class PlayerCommand(Command):
         self._send('setPos', x, y, z)
 
 
-class CameraCommand(Command):
+class Camera(Command):
     _func_prefix = 'camera.mode'
 
     def set_normal(self):
@@ -111,10 +111,10 @@ class Minecraft(object):
         logger.info('Initializing connection to %s:%d...', host, port)
         self._conn = Connection(host, port)
         logger.info('Loading world commands...')
-        self.world = WorldCommand(self._conn)
+        self.world = World(self._conn)
         logger.info('Loading chat commands...')
-        self.chat = ChatCommand(self._conn)
+        self.chat = Chat(self._conn)
         logger.info('Loading player commands...')
-        self.player = PlayerCommand(self._conn)
+        self.player = Player(self._conn)
         logger.info('Loading camera commands...')
-        self.camera = CameraCommand(self._conn)
+        self.camera = Camera(self._conn)
