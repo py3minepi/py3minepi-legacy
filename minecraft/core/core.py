@@ -34,9 +34,33 @@ class Command(object):
         full_func = '%s.%s' % (self._func_prefix, func)
         return self._conn.send_receive(full_func, *args)
 
+    def _setting(self, **kwargs):
+        """
+        Set a setting.
+
+        This is not meant to be called directly. But a subcommand can alias it
+        to ``setting``. It must also provide a ``_setting_keys`` dictionary as
+        class or instance attribute.
+
+        """
+        # Validate input data
+        for key, value in kwargs.items():
+            if not key in self._setting_keys:
+                raise ValueError('"%s" is not a valid world setting.' % key)
+            if not (value is True or value is False):
+                raise ValueError('You must set "%s" to either True or False.' % key)
+
+        # Send commands
+        for key, value in kwargs.items():
+            self._send('world.setting', 1 if value is True else 0)
+
 
 class World(Command):
     _func_prefix = 'world'
+    _setting_keys = {  # Mapping of valid setting keys to the TCP API equivalents
+        'world_unbreakable': 'world_immutable',
+        'nametags_visible': 'nametags_visible',
+    }
 
     def get_block(self, x, y, z):
         value = self._send_receive('getBlock', x, y, z)
@@ -58,9 +82,8 @@ class World(Command):
     def restore_checkpoint(self):
         self._send('checkpoint.restore')
 
-    def setting(self):
-        # TODO what does this do?
-        pass
+    def setting(self, **kwargs):
+        self._setting(**kwargs)
 
 
 class Chat(Command):
@@ -73,6 +96,9 @@ class Chat(Command):
 
 class Player(Command):
     _func_prefix = 'player'
+    _setting_keys = {  # Mapping of valid setting keys to the TCP API equivalents
+        'autojump': 'autojump',
+    }
 
     def get_tile(self):
         value = self._send_receive('getTile')
@@ -87,6 +113,9 @@ class Player(Command):
 
     def set_pos(self, x, y, z):
         self._send('setPos', x, y, z)
+
+    def setting(self, **kwargs):
+        self._setting(**kwargs)
 
 
 class Camera(Command):
