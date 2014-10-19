@@ -48,7 +48,7 @@ class Command(object):
         """
         # Validate input data
         for key, value in kwargs.items():
-            if not key in self._setting_keys:
+            if key not in self._setting_keys:
                 raise ValueError('"%s" is not a valid world setting.' % key)
             if not (value is True or value is False):
                 raise ValueError('You must set "%s" to either True or False.' % key)
