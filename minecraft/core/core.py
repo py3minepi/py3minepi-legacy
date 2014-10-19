@@ -38,9 +38,12 @@ class Command(object):
         """
         Set a setting.
 
-        This is not meant to be called directly. But a subcommand can alias it
-        to ``setting``. It must also provide a ``_setting_keys`` dictionary as
-        class or instance attribute.
+        This is not meant to be called directly. But a subcommand can call it
+        from his own ``setting`` method. The subcommand must also provide a
+        ``_setting_keys`` dictionary as class or instance attribute.
+
+        This methods expects arguments as keyword arguments with boolean values
+        (e.g. ``setting(autojump=True)``).
 
         """
         # Validate input data
